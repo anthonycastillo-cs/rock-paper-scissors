@@ -66,7 +66,7 @@ async function playRound() {
   score.textContent = `Human Score: ${humanScore} Computer Score: ${computerScore}`;
   if (humanScore < 5 || computerScore < 5) {
     if (humanScore == 5) {
-      score.textContent = "YOU WIN!!!!!";
+      score.textContent = "YOU WIN!!!!!👏🏽";
       humanScore = 0;
       computerScore = 0;
     } else if (computerScore == 5) {
