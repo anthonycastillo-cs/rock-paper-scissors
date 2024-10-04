@@ -1,15 +1,17 @@
 let humanScore = 0;
 let computerScore = 0;
+
 function getComputerChoice() {
   const choices = ["Rock", "Paper", "Scissors"];
   let randomChoice = Math.floor(Math.random() * choices.length);
   return choices[randomChoice];
 }
+
 function getHumanChoice() {
   return new Promise((resolve) => {
     const btn = document.querySelector("#rock");
     btn.addEventListener("click", () => {
-      resolve("rock");
+      return resolve("rock");
     });
     const btn2 = document.querySelector("#paper");
     btn2.addEventListener("click", () => {
@@ -21,50 +23,59 @@ function getHumanChoice() {
     });
   });
 }
-// getHumanChoice();
-async function playRound(computerChoice) {
-  //   humanChoice = humanChoice.toLowerCase();
+
+// const mainContainer = document.querySelector(".main-container");
+const choiceMade = document.createElement("div");
+choiceMade.classList.add("choice-item");
+const scoreContainer = document.querySelector(".score-container");
+const score = document.createElement("div");
+scoreContainer.appendChild(choiceMade);
+scoreContainer.appendChild(score);
+
+async function playRound() {
   const humanChoice = await getHumanChoice();
-  if (humanChoice == "rock" && computerChoice == "Rock") {
-    console.log("Nobody wins :) Try Again");
-  } else if (humanChoice == "paper" && computerChoice == "Paper") {
-    console.log("Nobody wins :) Try Again");
-  } else if (humanChoice == "scissors" && computerChoice == "Scissors") {
-    console.log("Nobody wins :) Try Again");
-  } else if (humanChoice == "paper" && computerChoice == "Rock") {
-    console.log("You win! Paper beats rock");
+  const compChoice = getComputerChoice();
+  if (humanChoice == "rock" && compChoice == "Rock") {
+    choiceMade.textContent = "Draw! Try Again";
+  } else if (humanChoice == "paper" && compChoice == "Paper") {
+    choiceMade.textContent = "Draw! Try Again";
+  } else if (humanChoice == "scissors" && compChoice == "Scissors") {
+    choiceMade.textContent = "Draw! Try Again";
+  } else if (humanChoice == "paper" && compChoice == "Rock") {
+    choiceMade.textContent = "You Win! Paper beats rock";
     humanScore++;
-  } else if (humanChoice == "paper" && computerChoice == "Scissors") {
-    console.log("You lose! Scissors beats paper");
+  } else if (humanChoice == "paper" && compChoice == "Scissors") {
+    choiceMade.textContent = "You Lose! Scissors beats paper";
     computerScore++;
-  } else if (humanChoice == "rock" && computerChoice == "Paper") {
-    console.log("You lose! Paper beats rock");
+  } else if (humanChoice == "rock" && compChoice == "Paper") {
+    choiceMade.textContent = "You Lose! Paper beats rock";
     computerScore++;
-  } else if (humanChoice == "rock" && computerChoice == "Scissors") {
-    console.log("You win! Rock beats Scissors");
+  } else if (humanChoice == "rock" && compChoice == "Scissors") {
+    choiceMade.textContent = "You Win! Rock beats Scissors";
     humanScore++;
-  } else if (humanChoice == "scissors" && computerChoice == "Paper") {
-    console.log("You win! Scissors beats Paper");
+  } else if (humanChoice == "scissors" && compChoice == "Paper") {
+    choiceMade.textContent = "You Win! Scissors beats Paper";
     humanScore++;
-  } else if (humanChoice == "scissors" && computerChoice == "Rock") {
-    console.log("You lose! Rock beats Scissors");
+  } else if (humanChoice == "scissors" && compChoice == "Rock") {
+    choiceMade.textContent = "You Lose! Rock beats Scissors";
     computerScore++;
   } else {
-    console.log("Only type Rock, Paper, or Scissors");
+    choiceMade.textContent = "Only type Rock, Paper, or Scissors";
   }
   console.log(`Human Score: ${humanScore}, Computer Score: ${computerScore}`);
-  if(humanScore < 3 || computerScore < 3){
-    if(humanScore == 3){
-        console.log("YOU WIN!!!!");
-        humanScore = 0;
-        computerScore = 0;
+  score.textContent = `Human Score: ${humanScore} Computer Score: ${computerScore}`;
+  if (humanScore < 5 || computerScore < 5) {
+    if (humanScore == 5) {
+      score.textContent = "YOU WIN!!!!!";
+      humanScore = 0;
+      computerScore = 0;
+    } else if (computerScore == 5) {
+      score.textContent = "YOU LOSE! CAN'T BEAT CPU HUH 😂";
+      humanScore = 0;
+      computerScore = 0;
     }
-    else if(computerScore == 3){
-        console.log("YOU LOSE!! ;)");
-        humanScore = 0;
-        computerScore = 0;
-    }
-    playRound(getComputerChoice());
+    playRound();
   }
 }
-playRound(getComputerChoice());
+
+playRound();
